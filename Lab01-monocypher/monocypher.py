@@ -5,16 +5,18 @@
 
 #1.1
 
-f = open("alice.txt", "r")
-alice = f.read()
-alice = alice.lower()
+import sys
+
+with open(sys.argv[1], 'r') as f:
+    text = f.read()      
+
+text = text.lower()
 letterFrequencyList = []
 for i in range(26):
-    letterFrequencyList.append(0)
-print(len(alice))
-letterCount = 0 
+    letterFrequencyList.append(0.0)
+letterCount = 0
 
-for char in alice:
+for char in text:
     if (char.isalpha()):
         added = False
         i = 0
@@ -26,11 +28,10 @@ for char in alice:
                 i = i + 1
         letterCount = letterCount + 1
 
-print(letterCount)
-
 for i in range(26):
    letterFrequencyList[i] = letterFrequencyList[i] / letterCount
-   print(str(chr(i+97)) + ":" + str(letterFrequencyList[i]))
+   if (sys.argv[2] == "frequency"):
+       print(str(chr(i+97)) + ":" + str(letterFrequencyList[i]))
  
 
     
