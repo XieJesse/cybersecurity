@@ -8,43 +8,43 @@
 import sys
 import math
 
-with open(sys.argv[1], 'r') as f:
-    text = f.read() #put contents of file into string   
+def frequency(text):
+    letterFrequencyList = []
+    for i in range(26):
+        letterFrequencyList.append(0.0) #create blank list for letter frequencies
+    letterCount = 0
+    for char in text.lower():
+        if (char.isalpha()): #counts only letters
+            added = False
+            i = 0
+            while added is False: #add one to the frequency list when the letter shows up
+                if (ord(char)-97 == i):
+                    letterFrequencyList[i] += 1
+                    added = True
+                else:
+                    i = i + 1 
+            letterCount = letterCount + 1
 
-letterFrequencyList = []
-for i in range(26):
-    letterFrequencyList.append(0.0) #create blank list for letter frequencies
+    for i in range(26): #convert frequency to relative frequency
+       letterFrequencyList[i] = letterFrequencyList[i] / letterCount
+    return letterFrequencyList
 
-letterCount = 0
-for char in text.lower():
-    if (char.isalpha()): #counts only letters
-        added = False
-        i = 0
-        while added is False: #add one to the frequency list when the letter shows up
-            if (ord(char)-97 == i):
-                letterFrequencyList[i] += 1
-                added = True
-            else:
-                i = i + 1 
-        letterCount = letterCount + 1
-
-for i in range(26): #convert frequency to relative frequency
-   letterFrequencyList[i] = letterFrequencyList[i] / letterCount
-   if (sys.argv[2] == "frequency"): #prints relative frequencies accordingly
-       print(str(chr(i+97)) + ":" + str(letterFrequencyList[i]))
+if (sys.argv[1] == "frequency"): #prints relative frequencies accordingly
+    with open(sys.argv[2], 'r') as f:
+        textfile = f.read() #put contents of file into string
+    freqs = frequency(textfile)
+    for i in range(26):
+        print(str(chr(i+97)) + ":" + str(freqs[i]))
 
 #1.2
 
-relativeFrequency = [
-    0.08167, 0.01492, 0.02782, 0.04253, 0.12702,
-    0.02228, 0.02015, 0.06094, 0.06966, 0.00153,
-    0.00772, 0.04025, 0.02406, 0.06749, 0.07507,
-    0.01929, 0.00095, 0.05987, 0.06327, 0.09056,
-    0.02758, 0.00978, 0.02360, 0.00150, 0.01974,
-    0.00074
-    ] #relative frequencys for letters in english from cs.wellesley.edu
-       
-if (sys.argv[2] == "decode"):
+if (sys.argv[1] == "decode"):
+     with open(sys.argv[2], 'r') as f:
+         text = f.read()
+     with open(sys.argv[3], 'r') as f:
+         reference = f.read()
+     relativeFrequency = frequency(reference)
+     letterFrequencyList = frequency(text)
      closest = sys.maxsize
      shift = 0
      for i in range(26): #loop for shifts 0-25
@@ -69,4 +69,3 @@ if (sys.argv[2] == "decode"):
              newText += str(chr(newOrd))
          else: newText += char
      print(newText) #outputs new text
-    
