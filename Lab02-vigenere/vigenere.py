@@ -23,34 +23,21 @@ def shiftLetter(letter, number):
 
 keyfile = keyfile.lower()
 
-if (sys.argv[1] == "encode"): #encode part
-    encodedString = ""
-    keyIndex = 0 ;
-    for i in range(len(textfile)-1):
-        if (textfile[i].isalpha()):
+finalString = ""
+keyIndex = 0 ;
+for i in range(len(textfile)-1):
+    if (textfile[i].isalpha()):
+        shift = 0
+        if (sys.argv[1] == "encode"):
             shift = ord(keyfile[keyIndex]) - 97
-            newLet = shiftLetter(textfile[i],shift)
-            encodedString += newLet
-            keyIndex += 1
-            if (keyIndex > len(keyfile)-1):
-                keyIndex = 0
-        else:
-            encodedString += textfile[i]
-    print(encodedString)
-        
-if (sys.argv[1] == "decode"): #decode part
-    decodedString = ""
-    keyIndex = 0 ;
-    for i in range(len(textfile)-1):
-        if (textfile[i].isalpha()):
+        if (sys.argv[1] == "decode"):
             shift = 26 - (ord(keyfile[keyIndex]) - 97)
-            newLet = shiftLetter(textfile[i],shift)
-            decodedString += newLet
-            keyIndex += 1
-            if (keyIndex > len(keyfile)-1):
-                keyIndex = 0
-        else:
-            decodedString += textfile[i]
-    print(decodedString)
-        
-    
+        newLet = shiftLetter(textfile[i],shift)
+        finalString += newLet
+        keyIndex += 1
+        if (keyIndex > len(keyfile)-1):
+            keyIndex = 0
+    else:
+        finalString += textfile[i]
+print(finalString)
+
