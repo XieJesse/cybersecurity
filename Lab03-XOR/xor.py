@@ -18,10 +18,18 @@ if(debug):
   print("inp: "+inp)
 
 def xor(key,inp):
-    output = ""
+    output = []
     keyIndex = 0
     for char in inp:
-        output += (ord(char) ^ ord(key[keyIndex])) + ' '
+        output.append(str((ord(char) ^ ord(key[keyIndex]))))
         keyIndex += 1
         if keyIndex == len(key):
             keyIndex = 0
+    return output
+
+if mode == "numOut":
+    output = ""
+    xorOutput = xor(key,inp)
+    for i in xorOutput:
+        output += str(hex(int(i)))[2:4] + ' '
+    print(output)
