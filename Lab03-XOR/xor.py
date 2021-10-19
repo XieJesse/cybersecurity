@@ -17,19 +17,28 @@ if(debug):
   print("key: "+key)
   print("inp: "+inp)
 
-def xor(key,inp):
+def xor(key,inp): #xor method that accepts key and inp string
     output = []
     keyIndex = 0
-    for char in inp:
-        output.append(str((ord(char) ^ ord(key[keyIndex]))))
-        keyIndex += 1
+    for char in inp: #add xor'ed character to array
+        output.append(char ^ key[keyIndex])
+        keyIndex += 1 #keep track of index
         if keyIndex == len(key):
             keyIndex = 0
     return output
 
 if mode == "numOut":
-    output = ""
+    out = ""
     xorOutput = xor(key,inp)
     for i in xorOutput:
-        output += str(hex(int(i)))[2:4] + ' '
-    print(output)
+        out += hex(i)[2:4] + ' '
+    print(out)
+
+if mode == "human":
+    out = ""
+    xorOutput = xor(key,inp)
+    for i in xorOutput:
+        out += chr(i)
+        outfile = open("output","wb")
+        outfile.write(chr(i).to_bytes(1,byteorder="little"))
+    print(out)
