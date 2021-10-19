@@ -8,8 +8,8 @@ import sys
 mode = sys.argv[1]
 keyfile = sys.argv[2]
 inpfile = sys.argv[3]
-key = open(keyfile,"rb").read()[:-1] #removes the mandatory \n at the end of the file to support one line messages.
-inp = open(inpfile,"rb").read()[:-1] #removes the mandatory \n at the end of the file to support one line messages.
+key = open(keyfile,"rb").read()[:-1]
+inp = open(inpfile,"rb").read()[:-1]
 debug = False
 
 if(debug):
@@ -21,7 +21,7 @@ def xor(key,inp): #xor method that accepts key and inp string
     output = []
     keyIndex = 0
     for char in inp: #add xor'ed character to array
-        output.append(char ^ key[keyIndex])
+        output.append((char) ^ (key[keyIndex]))
         keyIndex += 1 #keep track of index
         if keyIndex == len(key):
             keyIndex = 0
@@ -37,8 +37,6 @@ if mode == "numOut":
 if mode == "human":
     out = ""
     xorOutput = xor(key,inp)
+    outfile = open("output","wb")
     for i in xorOutput:
-        out += chr(i)
-        outfile = open("output","wb")
-        outfile.write(chr(i).to_bytes(1,byteorder="little"))
-    print(out)
+        outfile.write((i).to_bytes(1,byteorder="little"))
